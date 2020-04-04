@@ -4,7 +4,7 @@ export const DIRECTORY_DATA = {
       title: 'stickers',
       imageUrl: './images/directoryImages/stickers.jpg',
       id: 1,
-      linkUrl: 'shop/stickers',
+      linkUrl: 'shop',
     },
     {
       title: 'maps',

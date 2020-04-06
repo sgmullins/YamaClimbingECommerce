@@ -5,6 +5,7 @@ import { Homepage } from './pages/homepage/Homepage.component';
 import { ShopPage } from './pages/shop/ShopPage.component';
 import { Header } from './components/Header/Header.component';
 import { LoginRoutePage } from './pages/LoginRoutePage/LoginRoutePage.component';
+// import {RegisterForm} from './components/RegisterForm/RegisterForm.component'
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { CurrentUserContext } from './contexts/currentUser-context/currentUser.context';
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
       unsubscribeFromAuth();
     };
   }, [setCurrentUser]);
+  console.log(currentUser);
   return (
     <div>
       <CurrentUserContext.Provider value={currentUser}>

@@ -30,7 +30,7 @@ export const Header = () => {
             </div>
             <Link to='#' className='option'>
               <div className='login-group'>
-                <span> Welcome, {currentUser.displayName.split(' ')[0]}</span>
+                <span>Welcome, {currentUser.displayName}</span>
 
                 <UserIcon />
               </div>

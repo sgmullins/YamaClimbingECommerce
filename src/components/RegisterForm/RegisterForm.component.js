@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { FaEyeSlash, FaRegEye, FaGoogle } from 'react-icons/fa';
-import { CustomButton } from '../Custom-button/CustomButton.component';
+import { FaEyeSlash, FaRegEye } from 'react-icons/fa';
 
-import { signInWithGoogle } from '../../firebase/firebase.utils';
-import './Login.styles.scss';
+import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import './RegisterForm.styles.scss';
+
 const useStyles = makeStyles((theme) => ({
   //TODO:Base form styles have been figured out, do final styles
   paper: {
@@ -69,20 +66,53 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Login = () => {
+export const RegisterForm = ({ setShowRegister }) => {
   const classes = useStyles();
-  const [showPassword, setShowPassword] = useState(false);
+
   const [userCredentials, setUserCredentials] = useState({
+    displayName: '',
     email: '',
     password: '',
+    confirmPassword: '',
   });
-  const { email, password } = userCredentials;
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const persistDataOverRerender = useRef({ willUnmount: false }); //need this to help with cleanup, without the state tries to update after already unmounted
+
+  useEffect(
+    () => () => {
+      persistDataOverRerender.current.willUnmount = true;
+    },
+    [],
+  );
+
+  const { displayName, email, password, confirmPassword } = userCredentials;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setUserCredentials({ email: '', password: '' });
-  };
 
+    if (password !== confirmPassword) {
+      alert('passwords do not match');
+      return;
+    }
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+      await createUserProfileDocument(user, { displayName });
+      !persistDataOverRerender.current.willUnmount &&
+        setUserCredentials({
+          displayName: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleChange = (event) => {
     const { value, name } = event.target;
     setUserCredentials({ ...userCredentials, [name]: value });
@@ -96,6 +126,31 @@ export const Login = () => {
           Sign in
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <TextField
+            variant='outlined'
+            margin='normal'
+            required
+            fullWidth
+            id='displayName'
+            label='Display Name'
+            name='displayName'
+            value={displayName}
+            onChange={handleChange}
+            autoFocus
+            InputLabelProps={{
+              classes: {
+                root: classes.label,
+                focused: classes.focused,
+              },
+            }}
+            InputProps={{
+              classes: {
+                root: classes.outlinedInput,
+                focused: classes.focused,
+                notchedOutline: classes.notchedOutline,
+              },
+            }}
+          />
           <TextField
             variant='outlined'
             margin='normal'
@@ -142,39 +197,32 @@ export const Login = () => {
               <FaEyeSlash onClick={() => setShowPassword(!showPassword)} />
             )}
           </div>
-          <div className={classes.forgot}>
-            <FormControlLabel
-              control={<Checkbox value='remember' />}
-              label='Remember me'
-            />
-            <Link href='#' className={classes.link}>
-              Forgot password?
-            </Link>
-          </div>
+          <TextField
+            variant='outlined'
+            margin='normal'
+            required
+            fullWidth
+            name='confirmPassword'
+            label='Retype Password'
+            type='password'
+            id='confirmPassword'
+            value={confirmPassword}
+            onChange={handleChange}
+          />
           <Button
             type='submit'
             fullWidth
             variant='contained'
             className={classes.submit}
           >
-            Sign In
+            Create Account
           </Button>
-          <Button
-            fullWidth
-            variant='contained'
-            className={classes.submit}
-            onClick={signInWithGoogle}
+          <Link
+            href='#'
+            className={classes.link}
+            onClick={() => setShowRegister(false)}
           >
-            <div className='google-signin-button'>
-              <FaGoogle />
-              <span className='google-signin-button__text'>
-                Sign In With Google
-              </span>
-            </div>
-          </Button>
-          <CustomButton>Testing</CustomButton>
-          <Link href='#' className={classes.link}>
-            {'Create a new account'}
+            {'Sign In'}
           </Link>
         </form>
       </div>

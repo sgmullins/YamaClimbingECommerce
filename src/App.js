@@ -1,14 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import { Homepage } from './pages/homepage/Homepage.component';
 import { ShopPage } from './pages/shop/ShopPage.component';
 import { Header } from './components/Header/Header.component';
 import { LoginRoutePage } from './pages/LoginRoutePage/LoginRoutePage.component';
-function App() {
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { CurrentUserContext } from './contexts/currentUser-context/currentUser.context';
+const App = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        //if a user exists or not, pass to createUser, will return if exist and create if not
+        const userRef = await createUserProfileDocument(userAuth);
+        //set out state using the properties on userRef
+        userRef.onSnapshot((snapshot) => {
+          setCurrentUser({
+            id: snapshot.id,
+            ...snapshot.data(),
+          });
+        });
+      } else {
+        //if userRef === null meaning user signed out, setstate of current user to null
+        setCurrentUser(userAuth);
+      }
+    });
+    return () => {
+      unsubscribeFromAuth();
+    };
+  }, [setCurrentUser]);
   return (
     <div>
-      <Header />
+      <CurrentUserContext.Provider value={currentUser}>
+        <Header currentUser={currentUser} />
+      </CurrentUserContext.Provider>
       <Switch>
         <Route exact path='/' component={Homepage} />
         <Route exact path='/shop' component={ShopPage} />
@@ -16,6 +43,6 @@ function App() {
       </Switch>
     </div>
   );
-}
+};
 
 export default App;

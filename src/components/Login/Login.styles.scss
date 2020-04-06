@@ -3,3 +3,11 @@
   justify-content: flex-end;
   font-size: 20px;
 }
+.google-signin-button {
+  display: flex;
+  align-items: center;
+
+  &__text {
+    margin-left: 10px;
+  }
+}

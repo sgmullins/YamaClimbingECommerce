@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Header.styles.scss';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/original.svg';
-// import { FaUserCircle } from 'react-icons/fa';
 import { UserIcon } from '../../contexts/Icon-context/UserIcon';
+import { auth } from '../../firebase/firebase.utils';
+import { CurrentUserContext } from '../../contexts/currentUser-context/currentUser.context';
+
 export const Header = () => {
+  const currentUser = useContext(CurrentUserContext);
+  // const welcomeName = currentUser.displayName.split(' ')[0];
+
   return (
     //TODO:Replace temp svg with yama svg
     <div className='header'>
@@ -18,12 +23,27 @@ export const Header = () => {
         <Link to='/about' className='option'>
           About
         </Link>
-        <Link to='/login' className='option'>
-          <div className='login-group'>
-            <span>MyAccount</span>
-            <UserIcon />
-          </div>
-        </Link>
+        {currentUser ? (
+          <>
+            <div className='option' onClick={() => auth.signOut()}>
+              SignOut
+            </div>
+            <Link to='#' className='option'>
+              <div className='login-group'>
+                <span> Welcome, {currentUser.displayName.split(' ')[0]}</span>
+
+                <UserIcon />
+              </div>
+            </Link>
+          </>
+        ) : (
+          <Link to='/login' className='option'>
+            <div className='login-group'>
+              <span>MyAccount</span>
+              <UserIcon />
+            </div>
+          </Link>
+        )}
       </div>
     </div>
   );

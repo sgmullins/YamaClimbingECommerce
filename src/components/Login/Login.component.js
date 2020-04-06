@@ -10,8 +10,10 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { FaEyeSlash, FaRegEye } from 'react-icons/fa';
+import { FaEyeSlash, FaRegEye, FaGoogle } from 'react-icons/fa';
 import { CustomButton } from '../Custom-button/CustomButton.component';
+
+import { signInWithGoogle } from '../../firebase/firebase.utils';
 import './Login.styles.scss';
 const useStyles = makeStyles((theme) => ({
   //TODO:Base form styles have been figured out, do final styles
@@ -156,6 +158,19 @@ export const Login = () => {
             className={classes.submit}
           >
             Sign In
+          </Button>
+          <Button
+            fullWidth
+            variant='contained'
+            className={classes.submit}
+            onClick={signInWithGoogle}
+          >
+            <div className='google-signin-button'>
+              <FaGoogle />
+              <span className='google-signin-button__text'>
+                Sign In With Google
+              </span>
+            </div>
           </Button>
           <CustomButton>Testing</CustomButton>
           <Link href='#' className={classes.link}>

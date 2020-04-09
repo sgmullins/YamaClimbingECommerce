@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { FaEyeSlash, FaRegEye, FaGoogle } from 'react-icons/fa';
-import { CustomButton } from '../Custom-button/CustomButton.component';
 
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 import './Login.styles.scss';
@@ -46,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'red',
     fontSize: '18px',
     textDecoration: 'underline',
+    cursor: 'pointer',
   },
   forgot: {
     width: '100%',
@@ -179,7 +179,6 @@ export const Login = ({ setShowRegister }) => {
               </span>
             </div>
           </Button>
-          <CustomButton>Testing</CustomButton>
           <Link className={classes.link} onClick={() => setShowRegister(true)}>
             {'Create a new account'}
           </Link>

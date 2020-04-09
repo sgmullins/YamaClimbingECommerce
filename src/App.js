@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import { Homepage } from './pages/homepage/Homepage.component';
 import { ShopPage } from './pages/shop/ShopPage.component';
-import { Header } from './components/Header/Header.component';
+import Header from './components/Header/Header.component';
 import { LoginRoutePage } from './pages/LoginRoutePage/LoginRoutePage.component';
 // import {RegisterForm} from './components/RegisterForm/RegisterForm.component'
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { CurrentUserContext } from './contexts/currentUser-context/currentUser.context';
+
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -36,12 +37,18 @@ const App = () => {
   return (
     <div>
       <CurrentUserContext.Provider value={currentUser}>
-        <Header currentUser={currentUser} />
+        <Header />
       </CurrentUserContext.Provider>
       <Switch>
         <Route exact path='/' component={Homepage} />
         <Route exact path='/shop' component={ShopPage} />
-        <Route exact path='/login' component={LoginRoutePage} />
+        <Route
+          exact
+          path='/login'
+          render={() =>
+            currentUser ? <Redirect to='/' /> : <LoginRoutePage />
+          }
+        />
       </Switch>
     </div>
   );

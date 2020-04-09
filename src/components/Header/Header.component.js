@@ -6,9 +6,8 @@ import { UserIcon } from '../../contexts/Icon-context/UserIcon';
 import { auth } from '../../firebase/firebase.utils';
 import { CurrentUserContext } from '../../contexts/currentUser-context/currentUser.context';
 
-export const Header = () => {
+const Header = () => {
   const currentUser = useContext(CurrentUserContext);
-  // const welcomeName = currentUser.displayName.split(' ')[0];
 
   return (
     //TODO:Replace temp svg with yama svg
@@ -48,3 +47,5 @@ export const Header = () => {
     </div>
   );
 };
+
+export default Header;

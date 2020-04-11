@@ -39,6 +39,15 @@ const App = () => {
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
       </CurrentUserContext.Provider>
+      <div className='hero'>
+        <img src='./images/hero.jpeg' alt='' />
+        <div className='hero-image-text'>
+          <p>
+            <span className='yama-text'>YAMA</span>climbing
+          </p>
+          <p>artwork inspired by travel</p>
+        </div>
+      </div>
       <Switch>
         <Route exact path='/' component={Homepage} />
         <Route exact path='/shop' component={ShopPage} />

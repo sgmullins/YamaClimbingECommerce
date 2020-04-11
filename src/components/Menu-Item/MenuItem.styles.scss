@@ -18,7 +18,7 @@
     }
 
     & .content {
-      opacity: 0.9;
+      opacity: 0.95;
     }
   }
 
@@ -49,20 +49,23 @@
     align-items: center;
     justify-content: center;
     border: 1px solid black;
-    background-color: white;
-    opacity: 0.7;
+    border-radius: 5px;
+    background-color: rgba(60, 71, 81, 90%);
+    box-shadow: 0px 4px 4px 0px rgba(71, 68, 71, 1);
+    opacity: 0.8;
     position: absolute;
 
     .title {
-      font-weight: bold;
+      font-weight: 600;
       margin: 0 6px 0;
       font-size: 22px;
-      color: #4a4a4a;
+      color: rgb(242, 242, 242);
     }
 
     .subtitle {
-      font-weight: lighter;
+      font-weight: 300;
       font-size: 16px;
+      color: rgb(242, 242, 242);
     }
   }
 }

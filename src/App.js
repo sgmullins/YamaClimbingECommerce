@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import { Homepage } from './pages/homepage/Homepage.component';
-import { ShopPage } from './pages/shop/ShopPage.component';
+import ShopPage from './pages/shop/ShopPage.component';
 import Header from './components/Header/Header.component';
 import { LoginRoutePage } from './pages/LoginRoutePage/LoginRoutePage.component';
+import CheckoutPage from './pages/checkout/CheckoutPage.component';
 // import {RegisterForm} from './components/RegisterForm/RegisterForm.component'
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { CurrentUserContext } from './contexts/currentUser-context/currentUser.context';
@@ -34,23 +35,15 @@ const App = () => {
     };
   }, [setCurrentUser]);
   console.log(currentUser);
+
   return (
     <div>
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
       </CurrentUserContext.Provider>
-      <div className='hero'>
-        <img src='./images/hero.jpeg' alt='' />
-        <div className='hero-image-text'>
-          <p>
-            <span className='yama-text'>YAMA</span>climbing
-          </p>
-          <p>artwork inspired by travel</p>
-        </div>
-      </div>
       <Switch>
         <Route exact path='/' component={Homepage} />
-        <Route exact path='/shop' component={ShopPage} />
+        <Route path='/shop' component={ShopPage} />
         <Route
           exact
           path='/login'
@@ -58,6 +51,7 @@ const App = () => {
             currentUser ? <Redirect to='/' /> : <LoginRoutePage />
           }
         />
+        <Route exact path='/checkout' component={CheckoutPage} />
       </Switch>
     </div>
   );

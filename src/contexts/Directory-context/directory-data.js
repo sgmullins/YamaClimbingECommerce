@@ -1,29 +1,29 @@
 export const DIRECTORY_DATA = {
   landingPageSections: [
     {
-      title: 'stickers',
+      title: 'all stickers',
       imageUrl: './images/directoryImages/stickers.jpg',
       id: 1,
       linkUrl: 'shop',
     },
     {
       title: 'maps',
-      imageUrl: './images/directoryImages/maps.jpg',
+      imageUrl: './images/directoryImages/mapHolder.jpeg',
       id: 2,
       linkUrl: 'shop/maps',
     },
     {
-      title: 'sticker combos',
-      imageUrl: './images/directoryImages/stickerCombos.jpg',
+      title: 'van life',
+      imageUrl: './images/directoryImages/vanLife.jpeg',
       id: 3,
-      linkUrl: 'shop/stickerCombos',
+      linkUrl: 'shop/vanlife',
     },
     {
-      title: 'sticker sheets',
-      imageUrl: './images/directoryImages/stickerSheets.jpg',
+      title: 'climb and hike',
+      imageUrl: './images/directoryImages/ClimbAndHike.jpeg',
       size: 'large',
       id: 4,
-      linkUrl: 'shop/stickerSheets',
+      linkUrl: 'shop/climbhike',
     },
   ],
 };

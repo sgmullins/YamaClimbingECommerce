@@ -1,3 +1,5 @@
+const HexStickerPrice = (3.1).toFixed(2);
+
 const TEMP_SHOP_DATA = [
   {
     id: 1,
@@ -7,13 +9,17 @@ const TEMP_SHOP_DATA = [
       {
         id: 1,
         name: 'Brown Brim',
-        imageUrl: 'https://i.ibb.co/ZYW3VTp/brown-brim.png',
-        price: 25,
+        imageUrl: [
+          'https://i.etsystatic.com/5626895/r/il/8b8d15/2302800837/il_794xN.2302800837_drs9.jpg',
+        ],
+        price: `${HexStickerPrice}`,
       },
       {
         id: 2,
         name: 'Blue Beanie',
-        imageUrl: 'https://i.ibb.co/ypkgK0X/blue-beanie.png',
+        imageUrl: [
+          'https://i.etsystatic.com/5626895/r/il/8b8d15/2302800837/il_794xN.2302800837_drs9.jpg',
+        ],
         price: 18,
       },
       {

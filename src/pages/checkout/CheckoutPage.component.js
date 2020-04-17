@@ -3,6 +3,7 @@ import './CheckoutPage.styles.scss';
 
 import { connect } from 'react-redux';
 import CheckoutItem from '../../components/Checkout-Item/CheckoutItem.component';
+import StripeButton from '../../components/Stripe-Button/StripeButton.component';
 import {
   selectCartItems,
   selectCartTotalPrice,
@@ -38,7 +39,7 @@ const CheckoutPage = ({ cartItems, total }) => (
       <br />
       4242 4242 4242 4242 - Exp: 01/22 - CVV: 123
     </div>
-    {/* <StripeButton price={total} /> */}
+    <StripeButton price={total} />
   </div>
 );
 
